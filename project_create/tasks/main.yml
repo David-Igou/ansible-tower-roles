@@ -1,0 +1,19 @@
+---
+# tasks file for .
+- name: Playbook for Updating the state of a Tower Project and launching a job
+  hosts: localhost
+  gather_facts: false
+  collections:
+    - ansible.tower
+
+  tasks:
+  - name: Create/Update Project
+    tower_project:
+      name: "{{ project_name }}"
+      organization: "{{ organization_name }}"
+      state: present
+      description: "Made with Tower Collection"
+      scm_type: git
+      scm_url: "{{ scm_url }}"
+      scm_branch: "{{ scm_tag }}"
+
