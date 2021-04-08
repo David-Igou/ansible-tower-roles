@@ -1,0 +1,5 @@
+---
+# defaults file
+tower_project_description: "Made with Tower Collection"
+scm_tag: master
+

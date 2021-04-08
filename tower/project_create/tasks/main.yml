@@ -1,0 +1,23 @@
+---
+# tasks file for .
+
+- name: Create/Update Project in Pipeline org
+  ansible.tower.tower_project:
+    name: "{{ item }}"
+    organization: "{{ tower_project_organization_name }}"
+    state: present
+    description: "Made with Tower Collection"
+    scm_type: git
+    scm_url: "{{ scm_url }}"
+    scm_branch: "{{ scm_tag }}"
+    custom_virtualenv: "{{ tower_project_custom_virtualenv | default(omit) }}"
+    wait: no
+  with_items: "{{ tower_project_name }}"
+
+- name: Give team use permission
+  ansible.tower.tower_role:
+    team: "{{ tower_project_team }}"
+    project: "{{ item }}"
+    role: "use"
+  with_items: "{{ tower_project_name }}"
+  when: tower_project_team is defined
